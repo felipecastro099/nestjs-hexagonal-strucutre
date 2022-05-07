@@ -7,7 +7,7 @@ import { ApplicationModule } from '../application/application.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
+      database: 'database.sqlite',
       dropSchema: true,
       entities: [
         'dist/src/infrastructure/adapters/repositories/entity/*.entity{.ts,.js}',
