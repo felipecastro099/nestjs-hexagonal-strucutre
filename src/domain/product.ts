@@ -7,20 +7,20 @@ export default class Product {
 
   private readonly _price: number;
 
-  private _createAt: Date;
+  private readonly _createdAt: Date;
 
   constructor(
     id: number,
     name: string,
     description: string,
     price: number,
-    createAt: Date,
+    createdAt: Date,
   ) {
     this._id = id;
     this._name = name;
     this._description = description;
     this._price = price;
-    this._createAt = createAt;
+    this._createdAt = createdAt;
   }
 
   get id(): number {
@@ -39,7 +39,7 @@ export default class Product {
     return this._price;
   }
 
-  get createAt(): Date {
-    return this._createAt;
+  get createdAt(): Date {
+    return this._createdAt;
   }
 }

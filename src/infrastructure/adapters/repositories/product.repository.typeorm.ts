@@ -17,7 +17,7 @@ export default class ProductRepositoryTypeorm implements ProductRepository {
       name: product.name,
       description: product.description,
       price: product.price,
-      createdAt: product.createAt,
+      createdAt: product.createdAt,
     });
 
     return ProductMapper.toDomain(await this.repository.save(productCreated));
@@ -41,13 +41,16 @@ export default class ProductRepositoryTypeorm implements ProductRepository {
     productId: number,
     product: Product,
   ): Promise<Optional<Product>> {
-    return ProductMapper.toDomain(
-      await this.repository.save({
+    const productUpdated = await this.repository.findOne({
+      where: {
         id: productId,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-      }),
-    );
+      },
+    });
+
+    productUpdated.name = product.name;
+    productUpdated.description = product.description;
+    productUpdated.price = product.price;
+
+    return ProductMapper.toDomain(await this.repository.save(productUpdated));
   }
 }
