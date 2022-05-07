@@ -9,7 +9,7 @@ export default class UpdateProductUseCase {
     @Inject('ProductRepository') private productRepository: ProductRepository,
   ) {}
 
-  public handler(
+  public async handler(
     productId: number,
     product: Product,
   ): Promise<Optional<Product>> {

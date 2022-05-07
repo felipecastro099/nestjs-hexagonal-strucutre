@@ -7,7 +7,7 @@ export default class DeleteProductUseCase {
     @Inject('ProductRepository') private productRepository: ProductRepository,
   ) {}
 
-  public handler(productId: number): Promise<void> {
+  public async handler(productId: number): Promise<void> {
     return this.productRepository.deleteProduct(productId);
   }
 }

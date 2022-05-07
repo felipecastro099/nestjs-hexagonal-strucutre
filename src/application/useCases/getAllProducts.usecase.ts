@@ -8,7 +8,7 @@ export default class GetAllProductsUseCase {
     @Inject('ProductRepository') private productRepository: ProductRepository,
   ) {}
 
-  public handler(): Promise<Product[]> {
+  public async handler(): Promise<Product[]> {
     return this.productRepository.getAll();
   }
 }

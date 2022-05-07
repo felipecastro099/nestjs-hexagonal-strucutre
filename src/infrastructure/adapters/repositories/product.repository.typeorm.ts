@@ -41,12 +41,13 @@ export default class ProductRepositoryTypeorm implements ProductRepository {
     productId: number,
     product: Product,
   ): Promise<Optional<Product>> {
-    const findProduct = await this.repository.findOne({
-      where: { id: productId },
-    });
-
-    Object.assign(findProduct, product);
-
-    return ProductMapper.toDomain(await this.repository.save(findProduct));
+    return ProductMapper.toDomain(
+      await this.repository.save({
+        id: productId,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+      }),
+    );
   }
 }

@@ -12,7 +12,9 @@ export default class CreateProductUseCase {
     private productFactory: ProductFactory,
   ) {}
 
-  public handler(productCommand: ProductCommand): Promise<Optional<Product>> {
+  public async handler(
+    productCommand: ProductCommand,
+  ): Promise<Optional<Product>> {
     const product = this.productFactory.createProduct(productCommand);
     return this.productRepository.createProduct(product);
   }

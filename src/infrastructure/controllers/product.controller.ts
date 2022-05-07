@@ -3,11 +3,11 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   HttpStatus,
   Param,
   Post,
   Put,
-  Res,
 } from '@nestjs/common';
 import Product from '../../domain/product';
 import ProductCommand from '../../application/commands/product.command';
@@ -20,7 +20,7 @@ import UpdateProductUseCase from '../../application/useCases/updateProduct.useca
 @Controller('products')
 export default class ProductController {
   constructor(
-    private readonly getAllProductsUseCase: GetAllProductsUseCase,
+    private getAllProductsUseCase: GetAllProductsUseCase,
     private readonly getProductUseCase: GetProductUseCase,
     private readonly createProductUseCase: CreateProductUseCase,
     private readonly deleteProductUseCase: DeleteProductUseCase,
@@ -28,45 +28,32 @@ export default class ProductController {
   ) {}
 
   @Get()
-  public async getProducts(@Res() request): Promise<any> {
-    const products = await this.getAllProductsUseCase.handler();
-    return request.status(HttpStatus.OK).json(products);
+  public async getProducts(): Promise<any> {
+    return this.getAllProductsUseCase.handler();
   }
 
   @Get(':id')
-  public async getProduct(
-    @Res() request,
-    @Param('id') id: number,
-  ): Promise<any> {
-    const product = await this.getProductUseCase.handler(id);
-    return request.status(HttpStatus.OK).json(product);
+  public async getProduct(@Param('id') id: number): Promise<any> {
+    return await this.getProductUseCase.handler(id);
   }
 
+  @HttpCode(HttpStatus.CREATED)
   @Post()
-  public async createProduct(
-    @Res() request,
-    @Body() product: ProductCommand,
-  ): Promise<any> {
-    const productCreated = await this.createProductUseCase.handler(product);
-    return request.status(HttpStatus.CREATED).json(productCreated);
+  public async createProduct(@Body() product: ProductCommand): Promise<any> {
+    return this.createProductUseCase.handler(product);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  public async deleteProduct(
-    @Res() request,
-    @Param('id') id: number,
-  ): Promise<any> {
-    const product = await this.deleteProductUseCase.handler(id);
-    return request.status(HttpStatus.OK).json(product);
+  public async deleteProduct(@Param('id') id: number): Promise<any> {
+    await this.deleteProductUseCase.handler(id);
   }
 
   @Put(':id')
   public async updateProduct(
-    @Res() request,
     @Param('id') id: number,
     @Body() product: Product,
   ): Promise<any> {
-    const productUpdated = await this.updateProductUseCase.handler(id, product);
-    return request.status(HttpStatus.OK).json(productUpdated);
+    return this.updateProductUseCase.handler(id, product);
   }
 }
