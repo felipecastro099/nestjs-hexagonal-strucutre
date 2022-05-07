@@ -52,7 +52,7 @@ export default class ProductController {
   @Put(':id')
   public async updateProduct(
     @Param('id') id: number,
-    @Body() product: Product,
+    @Body() product: ProductCommand,
   ): Promise<any> {
     return this.updateProductUseCase.handler(id, product);
   }
