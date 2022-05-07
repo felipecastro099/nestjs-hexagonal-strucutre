@@ -20,7 +20,7 @@ import UpdateProductUseCase from '../../application/useCases/updateProduct.useca
 @Controller('products')
 export default class ProductController {
   constructor(
-    private getAllProductsUseCase: GetAllProductsUseCase,
+    private readonly getAllProductsUseCase: GetAllProductsUseCase,
     private readonly getProductUseCase: GetProductUseCase,
     private readonly createProductUseCase: CreateProductUseCase,
     private readonly deleteProductUseCase: DeleteProductUseCase,
